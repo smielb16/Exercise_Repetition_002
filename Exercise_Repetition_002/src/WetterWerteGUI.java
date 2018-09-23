@@ -1,25 +1,40 @@
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author elisc
  */
 public class WetterWerteGUI extends javax.swing.JFrame {
+
     private WetterModell bl = new WetterModell();
+
     /**
      * Creates new form WetterWerteGUI
      */
     public WetterWerteGUI() {
         initComponents();
         ltOut.setModel(bl);
+        sdMoisture.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                int value = sdMoisture.getValue();
+                lbMoisture.setText(String.format("Luftfeuchtigkeit: %d", value) + "%");
+            }
+        });
+        sdTemp.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                int value = sdTemp.getValue();
+                lbTemp.setText(String.format("Temperatur: %d° C", value));
+            }
+        });
     }
 
     /**
@@ -105,15 +120,14 @@ public class WetterWerteGUI extends javax.swing.JFrame {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         String tempstr = lbTemp.getText();
-        int temp = Integer.parseInt(tempstr.substring(tempstr.indexOf(" ")+1, tempstr.indexOf("°")));
+        int temp = Integer.parseInt(tempstr.substring(tempstr.indexOf(" ") + 1, tempstr.indexOf("°")));
         String moisturestr = lbMoisture.getText();
-        int moisture =
-                Integer
-                .parseInt(moisturestr.substring(moisturestr.indexOf(" ")+1, moisturestr.indexOf("%")));
-        WetterWert wert =
-                new WetterWert(temp, moisture,
+        int moisture
+                = Integer
+                        .parseInt(moisturestr.substring(moisturestr.indexOf(" ") + 1, moisturestr.indexOf("%")));
+        WetterWert wert
+                = new WetterWert(temp, moisture,
                         LocalDateTime.now());
-        System.out.println("HI");
         bl.add(wert);
     }//GEN-LAST:event_btAddActionPerformed
 

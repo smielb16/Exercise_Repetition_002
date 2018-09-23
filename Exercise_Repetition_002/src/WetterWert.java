@@ -24,7 +24,7 @@ public class WetterWert {
         return String.format("%s - %s - %d° - %d",
                 date,
                 time,
-                temperatur, luftfeuchtigkeit);
+                temperatur, luftfeuchtigkeit) + "%";
     }
 
 }
