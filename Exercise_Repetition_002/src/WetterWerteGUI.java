@@ -1,3 +1,7 @@
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +13,13 @@
  * @author elisc
  */
 public class WetterWerteGUI extends javax.swing.JFrame {
-
+    private WetterModell bl = new WetterModell();
     /**
      * Creates new form WetterWerteGUI
      */
     public WetterWerteGUI() {
         initComponents();
+        ltOut.setModel(bl);
     }
 
     /**
@@ -27,14 +32,14 @@ public class WetterWerteGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jInternalFrame2 = new javax.swing.JInternalFrame();
-        sdTemp = new javax.swing.JLabel();
-        jSlider1 = new javax.swing.JSlider();
-        sdMoisture = new javax.swing.JLabel();
-        jSlider2 = new javax.swing.JSlider();
+        lbTemp = new javax.swing.JLabel();
+        sdTemp = new javax.swing.JSlider();
+        lbMoisture = new javax.swing.JLabel();
+        sdMoisture = new javax.swing.JSlider();
         btAdd = new javax.swing.JButton();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        ltOut = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
@@ -43,48 +48,53 @@ public class WetterWerteGUI extends javax.swing.JFrame {
         jInternalFrame2.setVisible(true);
         jInternalFrame2.getContentPane().setLayout(new java.awt.GridLayout(5, 0));
 
-        sdTemp.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        sdTemp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sdTemp.setText("Temperatur: 0° C");
-        sdTemp.setToolTipText("");
+        lbTemp.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        lbTemp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTemp.setText("Temperatur: 0° C");
+        lbTemp.setToolTipText("");
+        jInternalFrame2.getContentPane().add(lbTemp);
+
+        sdTemp.setMajorTickSpacing(10);
+        sdTemp.setMaximum(40);
+        sdTemp.setMinimum(-20);
+        sdTemp.setMinorTickSpacing(5);
+        sdTemp.setPaintLabels(true);
+        sdTemp.setPaintTicks(true);
+        sdTemp.setValue(0);
         jInternalFrame2.getContentPane().add(sdTemp);
 
-        jSlider1.setMajorTickSpacing(10);
-        jSlider1.setMaximum(40);
-        jSlider1.setMinimum(-20);
-        jSlider1.setMinorTickSpacing(5);
-        jSlider1.setPaintLabels(true);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setValue(0);
-        jInternalFrame2.getContentPane().add(jSlider1);
+        lbMoisture.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        lbMoisture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbMoisture.setText("Luftfeuchtigkeit: 50%");
+        jInternalFrame2.getContentPane().add(lbMoisture);
 
-        sdMoisture.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        sdMoisture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sdMoisture.setText("Luftfeuchtigkeit: 50%");
+        sdMoisture.setMajorTickSpacing(10);
+        sdMoisture.setMinorTickSpacing(5);
+        sdMoisture.setPaintLabels(true);
+        sdMoisture.setPaintTicks(true);
         jInternalFrame2.getContentPane().add(sdMoisture);
-
-        jSlider2.setMajorTickSpacing(10);
-        jSlider2.setMinorTickSpacing(5);
-        jSlider2.setPaintLabels(true);
-        jSlider2.setPaintTicks(true);
-        jInternalFrame2.getContentPane().add(jSlider2);
 
         btAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btAdd.setText("Einfügen");
+        btAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddActionPerformed(evt);
+            }
+        });
         jInternalFrame2.getContentPane().add(btAdd);
 
         getContentPane().add(jInternalFrame2);
 
         jInternalFrame1.setTitle("Anzeige");
         jInternalFrame1.setVisible(true);
-        jInternalFrame1.getContentPane().setLayout(new java.awt.GridLayout());
+        jInternalFrame1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        ltOut.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(ltOut);
 
         jInternalFrame1.getContentPane().add(jScrollPane1);
 
@@ -92,6 +102,20 @@ public class WetterWerteGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+        String tempstr = lbTemp.getText();
+        int temp = Integer.parseInt(tempstr.substring(tempstr.indexOf(" ")+1, tempstr.indexOf("°")));
+        String moisturestr = lbMoisture.getText();
+        int moisture =
+                Integer
+                .parseInt(moisturestr.substring(moisturestr.indexOf(" ")+1, moisturestr.indexOf("%")));
+        WetterWert wert =
+                new WetterWert(temp, moisture,
+                        LocalDateTime.now());
+        System.out.println("HI");
+        bl.add(wert);
+    }//GEN-LAST:event_btAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,11 +156,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
     private javax.swing.JButton btAdd;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
-    private javax.swing.JLabel sdMoisture;
-    private javax.swing.JLabel sdTemp;
+    private javax.swing.JLabel lbMoisture;
+    private javax.swing.JLabel lbTemp;
+    private javax.swing.JList<String> ltOut;
+    private javax.swing.JSlider sdMoisture;
+    private javax.swing.JSlider sdTemp;
     // End of variables declaration//GEN-END:variables
 }
