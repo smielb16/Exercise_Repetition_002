@@ -27,4 +27,16 @@ public class WetterWert {
                 temperatur, luftfeuchtigkeit) + "%";
     }
 
+    public int getTemperatur() {
+        return temperatur;
+    }
+
+    public int getLuftfeuchtigkeit() {
+        return luftfeuchtigkeit;
+    }
+
+    public LocalDateTime getZeitpunkt() {
+        return zeitpunkt;
+    }
+
 }

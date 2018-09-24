@@ -1,6 +1,7 @@
 
+import java.io.File;
 import java.time.LocalDateTime;
-import java.util.Date;
+import javax.swing.JFileChooser;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
@@ -46,6 +47,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenu = new javax.swing.JMenu();
+        mSpeichern = new javax.swing.JMenuItem();
+        mLaden = new javax.swing.JMenuItem();
+        mExit = new javax.swing.JMenuItem();
         jInternalFrame2 = new javax.swing.JInternalFrame();
         lbTemp = new javax.swing.JLabel();
         sdTemp = new javax.swing.JSlider();
@@ -55,6 +61,34 @@ public class WetterWerteGUI extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
         ltOut = new javax.swing.JList<>();
+
+        jMenu.setText("Menu");
+
+        mSpeichern.setText("Speichern");
+        mSpeichern.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSpeichernActionPerformed(evt);
+            }
+        });
+        jMenu.add(mSpeichern);
+
+        mLaden.setText("Laden");
+        mLaden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mLadenActionPerformed(evt);
+            }
+        });
+        jMenu.add(mLaden);
+
+        mExit.setText("Exit");
+        mExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mExitActionPerformed(evt);
+            }
+        });
+        jMenu.add(mExit);
+
+        jPopupMenu1.add(jMenu);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
@@ -109,6 +143,7 @@ public class WetterWerteGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        ltOut.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(ltOut);
 
         jInternalFrame1.getContentPane().add(jScrollPane1);
@@ -130,6 +165,28 @@ public class WetterWerteGUI extends javax.swing.JFrame {
                         LocalDateTime.now());
         bl.add(wert);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void mSpeichernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSpeichernActionPerformed
+        JFileChooser chooser = new JFileChooser("D:\\Exercise_Repetition_002\\");
+        File f = null;
+        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            f = chooser.getSelectedFile();
+        }
+        bl.save(f);
+    }//GEN-LAST:event_mSpeichernActionPerformed
+
+    private void mLadenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLadenActionPerformed
+        JFileChooser chooser = new JFileChooser("D:\\Exercise_Repetition_002");
+        File f = null;
+        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            f = chooser.getSelectedFile();
+        }
+        bl.laden(f);
+    }//GEN-LAST:event_mLadenActionPerformed
+
+    private void mExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,10 +227,15 @@ public class WetterWerteGUI extends javax.swing.JFrame {
     private javax.swing.JButton btAdd;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
+    private javax.swing.JMenu jMenu;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbMoisture;
     private javax.swing.JLabel lbTemp;
     private javax.swing.JList<String> ltOut;
+    private javax.swing.JMenuItem mExit;
+    private javax.swing.JMenuItem mLaden;
+    private javax.swing.JMenuItem mSpeichern;
     private javax.swing.JSlider sdMoisture;
     private javax.swing.JSlider sdTemp;
     // End of variables declaration//GEN-END:variables
